@@ -1,0 +1,41 @@
+{% schema %}
+{
+  "name": "Footer",
+  "settings": [
+    {
+      "type": "text",
+      "id": "copyright_text",
+      "label": "Copyright Text",
+      "default": "© 2024 Your Store. All rights reserved."
+    }
+  ]
+}
+{% endschema %}
+
+<footer class="footer" role="contentinfo">
+  <div class="footer__content">
+    <div class="footer__copyright">
+      {{ settings.copyright_text }}
+    </div>
+  </div>
+</footer>
+
+<style>
+.footer {
+  background: #ffffff;
+  padding: 2rem;
+  text-align: center;
+  border-top: 1px solid rgba(0, 71, 171, 0.1);
+}
+
+.footer__content {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.footer__copyright {
+  font-family: 'Inter', sans-serif;
+  color: #666;
+  font-size: 0.9rem;
+}
+</style> 

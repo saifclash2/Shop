@@ -5,25 +5,58 @@
       "subtext": "The page you requested does not exist.",
       "link": "Continue shopping"
     },
+    "accessibility": {
+      "skip_to_text": "Skip to content",
+      "close": "Close",
+      "menu": "Menu",
+      "search": "Search",
+      "cart": "Cart",
+      "next": "Next",
+      "previous": "Previous"
+    },
     "search": {
       "title": "Search",
       "placeholder": "Search our store",
       "submit": "Search"
     },
     "meta": {
-      "tags": "Tags: ",
-      "page": "Page {current} of {total}"
+      "tags": "Tagged \"{{ tags }}\"",
+      "page": "Page {{ page }}"
     },
     "pagination": {
       "previous": "Previous",
-      "next": "Next"
+      "next": "Next",
+      "current_page": "Page {{ current }} of {{ total }}"
+    },
+    "password_page": {
+      "login_form_heading": "Enter store using password",
+      "login_form_password_label": "Password",
+      "login_form_submit": "Enter"
     }
   },
   "products": {
     "product": {
       "add_to_cart": "Add to cart",
+      "description": "Description",
+      "on_sale": "Sale",
+      "product_variants": "Product variants",
+      "quantity": {
+        "label": "Quantity",
+        "input_label": "Quantity for {{ product }}",
+        "increase": "Increase quantity for {{ product }}",
+        "decrease": "Decrease quantity for {{ product }}"
+      },
+      "price": {
+        "regular_price": "Regular price",
+        "sale_price": "Sale price",
+        "unit_price": "Unit price"
+      },
+      "share": "Share this product",
       "sold_out": "Sold out",
-      "unavailable": "Unavailable"
+      "unavailable": "Unavailable",
+      "vendor": "Vendor",
+      "video_exit_message": "{{ title }} opens full screen video in same window.",
+      "view_full_details": "View full details"
     }
   }
 } 
