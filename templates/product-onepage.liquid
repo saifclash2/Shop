@@ -1,33 +1,333 @@
 {% comment %}
-  Template Name: One Page Product
-  Description: A futuristic single-page scrolling layout for product showcase
+  PRODUCT-ONEPAGE.LIQUID
+  Description: A one-page scrolling product layout with a top video testimonial,
+  futuristic design using white & cobalt blue (#0047AB), and sections for
+  product details, reviews, and a "Why Choose Us" area.
 {% endcomment %}
 
 <!DOCTYPE html>
-<html lang="{{ request.locale.iso_code }}">
+<html lang="en">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>{{ product.title }} | {{ shop.name }}</title>
-  
-  {{ content_for_header }}
-  {{ 'product-onepage.css' | asset_url | stylesheet_tag }}
-  {{ 'product-onepage.js' | asset_url | defer | script_tag }}
-  
-  <!-- Google Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <meta charset="utf-8" />
+  <title>{{ product.title }} - One-Page Layout</title>
+  <!-- Include any existing theme styles/scripts as needed -->
+  <!-- Example: {{ 'theme.css' | asset_url | stylesheet_tag }} -->
+
+  <style>
+    /* =============================
+       FUTURISTIC ONE-PAGE CSS
+       ============================= */
+
+    /* Base resets & fonts (replace 'Orbitron' with your chosen font) */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      font-family: 'Orbitron', sans-serif;
+      background-color: #ffffff;
+      color: #000000;
+      overflow-x: hidden; /* prevent horizontal scroll */
+    }
+
+    /* Smooth scrolling */
+    html {
+      scroll-behavior: smooth;
+    }
+
+    /* Section Wrappers */
+    section {
+      width: 100%;
+      padding: 80px 20px;
+      position: relative;
+    }
+    .centered {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    /* =======================
+       HERO / VIDEO SECTION
+       ======================= */
+    #hero-video {
+      background-color: #ffffff;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding-top: 100px; /* extra space for design */
+    }
+    #hero-video h1 {
+      color: #0047AB;
+      font-size: 2.5rem;
+      margin-bottom: 20px;
+    }
+    #hero-video p {
+      color: #444444;
+      font-size: 1rem;
+      margin-bottom: 40px;
+      max-width: 600px;
+    }
+    #hero-video .video-container {
+      width: 80%;
+      max-width: 800px;
+      position: relative;
+      padding-bottom: 56.25%; /* 16:9 ratio */
+      height: 0;
+      margin-bottom: 40px;
+    }
+    #hero-video .video-container iframe,
+    #hero-video .video-container video {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+    }
+    #hero-video .cta-button {
+      display: inline-block;
+      background-color: #0047AB;
+      color: #ffffff;
+      padding: 15px 30px;
+      text-decoration: none;
+      font-weight: bold;
+      transition: background-color 0.3s;
+      border-radius: 4px;
+    }
+    #hero-video .cta-button:hover {
+      background-color: #00357f; /* slightly darker cobalt */
+    }
+
+    /* =======================
+       PRODUCT DETAILS SECTION
+       ======================= */
+    #product-details {
+      background-color: #f9f9f9;
+      text-align: center;
+    }
+    #product-details h2 {
+      color: #0047AB;
+      font-size: 2rem;
+      margin-bottom: 30px;
+    }
+    .product-wrapper {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: center;
+    }
+    .product-image {
+      flex: 1 1 400px;
+      min-width: 300px;
+      margin: 20px;
+    }
+    .product-info {
+      flex: 1 1 400px;
+      min-width: 300px;
+      margin: 20px;
+      text-align: left;
+    }
+    .product-info h3 {
+      font-size: 1.5rem;
+      margin-bottom: 10px;
+    }
+    .product-info p {
+      margin-bottom: 20px;
+      color: #333333;
+    }
+    .price {
+      font-size: 1.2rem;
+      color: #0047AB;
+      margin-bottom: 20px;
+    }
+    .add-to-cart-btn {
+      background-color: #0047AB;
+      color: #ffffff;
+      padding: 15px 30px;
+      text-decoration: none;
+      font-weight: bold;
+      border-radius: 4px;
+      display: inline-block;
+      margin-top: 10px;
+      transition: background-color 0.3s;
+    }
+    .add-to-cart-btn:hover {
+      background-color: #00357f;
+    }
+
+    /* =======================
+       RATINGS / REVIEWS SECTION
+       ======================= */
+    #ratings-reviews {
+      background-color: #ffffff;
+      text-align: center;
+    }
+    #ratings-reviews h2 {
+      color: #0047AB;
+      margin-bottom: 30px;
+    }
+    .stars {
+      font-size: 1.2rem;
+      color: #0047AB; /* star color */
+      margin-bottom: 10px;
+    }
+    .reviews-container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      margin-top: 20px;
+    }
+    .review-box {
+      background-color: #f1f1f1;
+      border-radius: 6px;
+      padding: 20px;
+      margin: 10px;
+      flex: 1 1 200px;
+      max-width: 300px;
+    }
+    .review-box p {
+      color: #333333;
+      font-size: 0.95rem;
+    }
+
+    /* =======================
+       WHY CHOOSE US SECTION
+       ======================= */
+    #why-choose-us {
+      background-color: #f9f9f9;
+      text-align: center;
+    }
+    #why-choose-us h2 {
+      color: #0047AB;
+      margin-bottom: 30px;
+    }
+    .choose-us-grid {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 20px;
+    }
+    .choose-us-item {
+      background-color: #ffffff;
+      border-radius: 6px;
+      padding: 30px;
+      max-width: 220px;
+      flex: 1 1 200px;
+      text-align: center;
+      margin: 10px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+    .choose-us-item h3 {
+      font-size: 1rem;
+      color: #0047AB;
+      margin-top: 10px;
+      margin-bottom: 10px;
+    }
+    .choose-us-item p {
+      font-size: 0.9rem;
+      color: #333333;
+    }
+
+    /* =========================
+       BACK TO TOP (FOOTER AREA)
+       ========================= */
+    #back-to-top {
+      background-color: #fff;
+      text-align: center;
+      padding: 20px;
+    }
+    #back-to-top a {
+      background-color: #0047AB;
+      color: #ffffff;
+      padding: 10px 20px;
+      text-decoration: none;
+      border-radius: 4px;
+      transition: background-color 0.3s;
+      font-weight: bold;
+    }
+    #back-to-top a:hover {
+      background-color: #00357f;
+    }
+
+    /* =======================
+       RESPONSIVE STYLES
+       ======================= */
+    @media (max-width: 768px) {
+      .product-wrapper {
+        flex-direction: column;
+      }
+      .product-info {
+        text-align: center;
+      }
+    }
+  </style>
 </head>
 
-<body class="template-product-onepage">
-  {% section 'product-onepage-hero' %}
-  {% section 'product-onepage-details' %}
-  {% section 'product-onepage-reviews' %}
-  {% section 'product-onepage-features' %}
-  
-  <button id="back-to-top" class="back-to-top" aria-label="Back to top">
-    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path d="M12 4L4 12M12 4L20 12M12 4V20" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-    </svg>
-  </button>
-</body>
-</html> 
+<body>
+  <!-- ========== HERO / VIDEO TESTIMONIAL SECTION ========== -->
+  <section id="hero-video">
+    <div class="centered">
+      <h1>Experience the Future</h1>
+      <p>Your next-generation product is here. Watch this quick testimonial to see how it changes everything.</p>
+
+      <!-- Video Container -->
+      <div class="video-container">
+        <!-- Replace with your actual video embed code or mp4 -->
+        <!-- Example with YouTube embed: -->
+        <iframe src="https://www.youtube.com/embed/VIDEO_ID" 
+                title="Testimonial Video" 
+                frameborder="0" 
+                allowfullscreen>
+        </iframe>
+      </div>
+
+      <!-- CTA Button to scroll to product details -->
+      <a href="#product-details" class="cta-button">See the Product</a>
+    </div>
+  </section>
+
+  <!-- ========== PRODUCT DETAILS SECTION ========== -->
+  <section id="product-details">
+    <div class="centered">
+      <h2>Introducing {{ product.title }}</h2>
+      <div class="product-wrapper">
+        <!-- Product Image (dynamically pulled if using product object) -->
+        <div class="product-image">
+          {% if product.featured_image %}
+            <img src="{{ product.featured_image | img_url: 'large' }}" 
+                 alt="{{ product.title }}" 
+                 style="max-width: 100%; border: 2px solid #0047AB; border-radius: 4px;">
+          {% else %}
+            <img src="//placehold.it/500x500?text=No+Image" alt="Placeholder" style="max-width: 100%;">
+          {% endif %}
+        </div>
+
+        <!-- Product Info -->
+        <div class="product-info">
+          <h3>{{ product.title }}</h3>
+          <p>{{ product.description | strip_html | truncate: 150 }}</p>
+          <p class="price">{{ product.price | money }}</p>
+
+          <!-- Add to Cart Form -->
+          <form action="/cart/add" method="post" enctype="multipart/form-data">
+            <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
+            <button type="submit" class="add-to-cart-btn">Add to Cart</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== RATINGS / REVIEWS SECTION ========== -->
+  <section id="ratings-reviews">
+    <div class="centered">
+      <h2>Ratings &amp; Reviews</h2>
+      <div class="stars">★★★★☆ (4.8/5)</div>
+      <div class="reviews-container">
+        <div class="review-box">
+          <p><strong>Amazing Experience!</strong><br>“This product blew my mind. The quality is top-notch!”</p>
+        </div>
+        <div class="review-box">
+          <p><strong>Exceeded My Expectations</strong><br>“Shipping was fast, and the futuristic design is so cool.”</p
