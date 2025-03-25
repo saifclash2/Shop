@@ -1,0 +1,247 @@
+{% schema %}
+{
+  "name": "Product Reviews",
+  "settings": [
+    {
+      "type": "color",
+      "id": "accent_color",
+      "label": "Accent Color",
+      "default": "#0047AB"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "review",
+      "name": "Review",
+      "settings": [
+        {
+          "type": "range",
+          "id": "rating",
+          "min": 1,
+          "max": 5,
+          "step": 0.1,
+          "label": "Rating",
+          "default": 4.8
+        },
+        {
+          "type": "text",
+          "id": "review_text",
+          "label": "Review Text",
+          "default": "This product exceeded all my expectations. The quality is outstanding!"
+        },
+        {
+          "type": "text",
+          "id": "reviewer_name",
+          "label": "Reviewer Name",
+          "default": "John Doe"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Product Reviews",
+      "blocks": [
+        {
+          "type": "review"
+        },
+        {
+          "type": "review"
+        },
+        {
+          "type": "review"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
+
+<section class="reviews-section" style="--accent-color: {{ settings.accent_color }}">
+  <div class="reviews-container">
+    <h2>What Our Customers Say</h2>
+    
+    <div class="reviews-slider">
+      {% for block in section.blocks %}
+        <div class="review-card" {{ block.shopify_attributes }}>
+          <div class="rating">
+            {% assign rating = block.settings.rating | round %}
+            {% for i in (1..5) %}
+              <svg class="star {% if i <= rating %}filled{% endif %}" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z" fill="currentColor"/>
+              </svg>
+            {% endfor %}
+            <span class="rating-number">{{ block.settings.rating }}</span>
+          </div>
+          
+          <p class="review-text">{{ block.settings.review_text }}</p>
+          
+          <div class="reviewer">
+            <span class="reviewer-name">{{ block.settings.reviewer_name }}</span>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+    
+    <div class="slider-controls">
+      <button class="prev-review" aria-label="Previous review">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M15 18L9 12L15 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </button>
+      <button class="next-review" aria-label="Next review">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M9 6L15 12L9 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </button>
+    </div>
+  </div>
+</section>
+
+<style>
+.reviews-section {
+  padding: 6rem 2rem;
+  background: #ffffff;
+}
+
+.reviews-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.reviews-container h2 {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 2.5rem;
+  color: var(--accent-color);
+  margin-bottom: 3rem;
+}
+
+.reviews-slider {
+  display: flex;
+  gap: 2rem;
+  overflow-x: hidden;
+  scroll-behavior: smooth;
+  padding: 1rem 0;
+  margin: 0 -1rem;
+}
+
+.review-card {
+  flex: 0 0 100%;
+  padding: 2rem;
+  background: #ffffff;
+  border-radius: 20px;
+  box-shadow: 0 10px 30px rgba(0, 71, 171, 0.1);
+  transition: transform 0.3s ease;
+}
+
+.review-card:hover {
+  transform: translateY(-5px);
+}
+
+.rating {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.star {
+  color: #ddd;
+  transition: color 0.3s ease;
+}
+
+.star.filled {
+  color: var(--accent-color);
+}
+
+.rating-number {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 1.2rem;
+  color: var(--accent-color);
+  margin-left: 0.5rem;
+}
+
+.review-text {
+  font-family: 'Inter', sans-serif;
+  font-size: 1.1rem;
+  line-height: 1.6;
+  color: #666;
+  margin-bottom: 1.5rem;
+}
+
+.reviewer-name {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 1.1rem;
+  color: var(--accent-color);
+}
+
+.slider-controls {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin-top: 2rem;
+}
+
+.slider-controls button {
+  background: none;
+  border: 2px solid var(--accent-color);
+  color: var(--accent-color);
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.slider-controls button:hover {
+  background: var(--accent-color);
+  color: white;
+}
+
+@media (max-width: 768px) {
+  .reviews-section {
+    padding: 4rem 1rem;
+  }
+  
+  .reviews-container h2 {
+    font-size: 2rem;
+  }
+  
+  .review-card {
+    padding: 1.5rem;
+  }
+}
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  const slider = document.querySelector('.reviews-slider');
+  const prevButton = document.querySelector('.prev-review');
+  const nextButton = document.querySelector('.next-review');
+  const cards = document.querySelectorAll('.review-card');
+  let currentIndex = 0;
+  
+  function updateSlider() {
+    slider.style.transform = `translateX(-${currentIndex * 100}%)`;
+  }
+  
+  prevButton.addEventListener('click', () => {
+    if (currentIndex > 0) {
+      currentIndex--;
+      updateSlider();
+    }
+  });
+  
+  nextButton.addEventListener('click', () => {
+    if (currentIndex < cards.length - 1) {
+      currentIndex++;
+      updateSlider();
+    }
+  });
+});
+</script> 

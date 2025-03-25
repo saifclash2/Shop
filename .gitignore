@@ -1,0 +1,15 @@
+# Shopify theme development
+.DS_Store
+node_modules/
+.env
+.env.*
+!.env.example
+config.yml
+config/*.yml
+config/*.json
+!config/settings_schema.json
+!config/settings_data.json
+*.log
+*.swp
+*.swo
+*~ 

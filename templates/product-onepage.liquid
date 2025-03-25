@@ -1,0 +1,33 @@
+{% comment %}
+  Template Name: One Page Product
+  Description: A futuristic single-page scrolling layout for product showcase
+{% endcomment %}
+
+<!DOCTYPE html>
+<html lang="{{ request.locale.iso_code }}">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{{ product.title }} | {{ shop.name }}</title>
+  
+  {{ content_for_header }}
+  {{ 'product-onepage.css' | asset_url | stylesheet_tag }}
+  {{ 'product-onepage.js' | asset_url | defer | script_tag }}
+  
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+</head>
+
+<body class="template-product-onepage">
+  {% section 'product-onepage-hero' %}
+  {% section 'product-onepage-details' %}
+  {% section 'product-onepage-reviews' %}
+  {% section 'product-onepage-features' %}
+  
+  <button id="back-to-top" class="back-to-top" aria-label="Back to top">
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M12 4L4 12M12 4L20 12M12 4V20" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</body>
+</html> 
